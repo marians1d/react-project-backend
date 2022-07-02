@@ -6,6 +6,8 @@ require('./src/config/database')
 
 const app = express();
 
+app.use(express.json());
+
 const routes = require('./src/routes');
 
 // Connect routes

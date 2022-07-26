@@ -8,8 +8,6 @@ const authCookieName = 'auth-cookie';
 
 module.exports = {
     async register(req, res) {
-        res.json({ test: req.body });
-
         const { username, email, password } = req.body;
 
         const existing = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
@@ -18,7 +16,7 @@ module.exports = {
             throw new Error('Email is taken');
         }
 
-        const hashedPassword = bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new User({
             username,
@@ -40,10 +38,11 @@ module.exports = {
             res.cookie(authCookieName, accessToken, { httpOnly: true });
         }
 
-        return {
+        return res.status(200)
+                .send({
             _id: user._id,
             username: user.username,
             email: user.email
-        };
+        });
     }
 };

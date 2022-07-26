@@ -1,4 +1,10 @@
 const express = require('express');
+const cors = require('cors');
+
+const routes = require('./src/routes');
+
+const config = require('./src/config/config');
+
 require('dotenv').config();
 
 // Connect database
@@ -9,10 +15,13 @@ const app = express();
 
 require('./src/config/express')(app);
 
-const routes = require('./src/routes');
-
+app.use(cors({
+    origin: config.origin,
+    credentials: true
+}));
 // Connect routes
-routes(app);
+
+app.use('/api', routes);
 
 const port = process.env.PORT || 3000;
 

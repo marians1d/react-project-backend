@@ -1,9 +1,11 @@
+const router = require('express').Router();
+
 const user = require('./users');
-const gallery = require('./galery');
+const gallery = require('./gallery');
 const orders = require('./orders');
 
-module.exports = app => {
-    app.use('/users', user);
-    app.use('/gallery', gallery);
-    app.use('/orders', orders);
-}
+router.use('/users', user);
+router.use('/gallery', gallery);
+router.use('/orders', orders);
+
+module.exports = router;

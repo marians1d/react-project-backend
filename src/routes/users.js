@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => res.json(['user']))
+const User = require('../controllers/user');
+
+router.post('/register', User.register);
 
 module.exports = router;

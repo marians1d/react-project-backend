@@ -32,17 +32,12 @@ module.exports = {
             email: user.email
         });
 
-        if (process.env.NODE_ENV === 'production') {
-            res.cookie(authCookieName, accessToken, { httpOnly: true, sameSite: 'none', secure: true });
-        } else {
-            res.cookie(authCookieName, accessToken, { httpOnly: true });
-        }
-
         return res.status(200)
-                .send({
-            _id: user._id,
-            username: user.username,
-            email: user.email
-        });
+            .send({
+                accessToken,
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            });
     }
 };

@@ -1,7 +1,7 @@
 const Order = require('../models/order');
 
 async function getAll(req, res) {
-    res.json(await Order.find({}))
+    res.json(await Order.find({}));
 }
 
 async function getById(req, res) {
@@ -48,7 +48,7 @@ async function updateById(req, res) {
 
             await existing.save();
 
-            return existing
+            return existing;
         } else {
             const error = new Error('Not Found');
             error._notFound;
@@ -62,7 +62,7 @@ async function updateById(req, res) {
             res.status(404).json({ message: 'Order not found' });
         } else {
             console.error(error);
-            res.status(400).json({ message: 'Request error' })
+            res.status(400).json({ message: 'Request error' });
         }
     }
 }

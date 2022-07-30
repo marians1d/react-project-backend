@@ -4,8 +4,8 @@ const { jwt, ApiError, formatJSON } = require('../utils');
 const validator = require('validator');
 
 const User = require('../models/user');
+const { logout } = require('../services/user');
 
-const blacklist = new Set();
 
 module.exports = {
     async register(req, res) {
@@ -81,10 +81,11 @@ module.exports = {
         return res.json(formattedUser);
     },
 
-    validateToken(token) {
-        if (blacklist.has(token)) {
-            throw new Error('Token is blacklisted');
-        }
-        return jwt.verify(token);
-    }
+    logout(req, res) {
+        const token = req.user.token;
+
+        logout(req.user.token);
+
+        res.status(204).end();
+    },
 };

@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
-const routes = require('./src/routes');
+const auth = require('./src/middlewares/auth');
 
+const routes = require('./src/routes');
 const config = require('./src/config/config');
 
 require('dotenv').config();
@@ -20,6 +21,8 @@ app.use(cors({
     credentials: true
 }));
 // Connect routes
+
+app.use(auth());
 
 app.use('/api', routes);
 

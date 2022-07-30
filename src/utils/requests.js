@@ -1,15 +1,14 @@
-const RESPONSE_MESSAGES = {
-
-};
-
 function requestHandler(fn) {
     return async (req, res, next) => {
         try {
-            fn(req, res);
+            await fn(req, res);
         } catch (error) {
-            console.log(error);
+            res.status(error.status).json({
+                message: error.message
+            });
         }
     };
 };
+
 
 module.exports = requestHandler;

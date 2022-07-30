@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const utils = require('../utils');
+const { jwt, ApiError } = require('../utils');
 
 const User = require('../models/user');
 
@@ -13,7 +13,7 @@ module.exports = {
         const existing = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
         if (existing) {
-            throw new Error('Email is taken');
+            throw new ApiError('EMAIL_TAKEN', 404);
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,18 +26,36 @@ module.exports = {
 
         await user.save();
 
-        const accessToken = utils.jwt.createToken({
+        const accessToken = jwt.createToken({
             _id: user._id,
             username: user.username,
             email: user.email
         });
 
         return res.status(200)
-            .send({
+            .json({
                 accessToken,
                 _id: user._id,
                 username: user.username,
                 email: user.email
             });
-    }
+    },
+
+    // async login(req, res) {
+    //     const { email, password } = req.body;
+        
+    //     const user = User.findOne({ email: new RegExp(`^${email}`, 'i')});
+
+    //     if (!user) {
+    //         throw new ApiError('INCORRECT_CREDENTIALS');
+    //     }
+
+    //     const match = bcrypt.compare(password, user.hashedPassword);
+
+    //     if (!match) {
+    //         throw new ApiError('INCORRECT_CREDENTIALS');
+    //     }
+
+    //     return res.json();
+    // }
 };

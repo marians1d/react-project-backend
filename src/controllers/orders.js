@@ -1,4 +1,5 @@
 const Order = require('../models/order');
+const { ApiError } = require('../utils');
 
 async function getAll(req, res) {
     res.json(await Order.find({}));
@@ -48,12 +49,8 @@ async function updateById(req, res) {
 
             await existing.save();
 
-            return existing;
         } else {
-            const error = new Error('Not Found');
-            error._notFound;
-
-            throw error;
+            throw new ApiError('NOT_FOUND');
         }
 
         return res.json(existing);

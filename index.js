@@ -23,6 +23,13 @@ app.use(cors({
 
 app.use('/api', routes);
 
+
+app.use('*', (req, res) => {
+    return res.json({
+        message: 'An error has ocurred'
+    });
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Working on port ${port}`));

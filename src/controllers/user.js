@@ -4,8 +4,6 @@ const { jwt, ApiError, formatJSON } = require('../utils');
 
 const User = require('../models/user');
 
-const authCookieName = 'auth-cookie';
-
 module.exports = {
     async register(req, res) {
         const { username, email, password } = req.body;

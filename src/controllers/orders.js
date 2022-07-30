@@ -1,14 +1,16 @@
-const Order = require('../models/Order');
+const Order = require('../models/order');
 const { ApiError } = require('../utils');
 
 async function getAll(req, res) {
-    res.json(await Order.find({}));
+    const orders = await Order.find({});
+
+    res.json(orders);
 }
 
 async function getById(req, res) {
     const id = req.params.id;
 
-    const order = Order.findById(id);
+    const order = await Order.findById(id);
 
     return res.json(order);
 }
@@ -25,7 +27,6 @@ async function add(req, res) {
         status
     });
 
-
     await result.save();
 
     res.json(result);
@@ -36,32 +37,22 @@ async function updateById(req, res) {
 
     const { title, description, price, image, type, status } = req.body;
 
-    try {
-        const existing = await Order.findById(id);
+    const existing = await Order.findById(id);
 
-        if (existing) {
-            existing.title = title;
-            existing.description = description;
-            existing.price = price;
-            existing.image = image;
-            existing.type = type;
-            existing.status = status;
-
-            await existing.save();
-
-        } else {
-            throw new ApiError('NOT_FOUND');
-        }
-
-        return res.json(existing);
-    } catch (error) {
-        if (error._notFound) {
-            res.status(404).json({ message: 'Order not found' });
-        } else {
-            console.error(error);
-            res.status(400).json({ message: 'Request error' });
-        }
+    if (!existing) {
+        throw new ApiError('ORDER_NOT_FOUND');
     }
+
+    existing.title = title;
+    existing.description = description;
+    existing.price = price;
+    existing.image = image;
+    existing.type = type;
+    existing.status = status;
+
+    await existing.save();
+
+    return res.json(existing);
 }
 
 async function del(req, res) {

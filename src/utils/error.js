@@ -4,7 +4,8 @@ const RESPONSE_MESSAGES = {
     'EMAIL_TAKEN': 'Email is taken',
     'INVALID_EMAIL': 'Email is invalid',
     'INVALID_PASSWORD': 'Password is invalid',
-    'INVALID_TOKEN': 'Token is blacklisted'
+    'INVALID_TOKEN': 'Token is blacklisted',
+    'ORDER_NOT_FOUND': 'Order not found'
 };
 
 class ApiError extends Error {

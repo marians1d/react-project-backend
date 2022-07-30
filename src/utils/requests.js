@@ -3,7 +3,7 @@ function requestHandler(fn) {
         try {
             await fn(req, res);
         } catch (error) {
-            res.status(error.status).json({
+            res.status(error.status || 500).json({
                 message: error.message
             });
         }

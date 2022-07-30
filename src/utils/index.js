@@ -3,9 +3,21 @@ const auth = require('./auth');
 const requestHandler = require('./requests');
 const ApiError = require('./error');
 
+const formatJSON = (obj, keys) => {
+    const keysArr = keys.split(' ');
+
+    const result = {};
+    keysArr.forEach((key) => {
+        result[key] = obj[key];
+    });
+
+    return result;
+};
+
 module.exports = {
     jwt,
     auth,
     requestHandler,
-    ApiError
+    ApiError,
+    formatJSON
 };

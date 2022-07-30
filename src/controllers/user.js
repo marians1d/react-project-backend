@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const { jwt, ApiError } = require('../utils');
+const { jwt, ApiError, formatJSON } = require('../utils');
 
 const User = require('../models/user');
 
@@ -41,21 +41,21 @@ module.exports = {
             });
     },
 
-    // async login(req, res) {
-    //     const { email, password } = req.body;
-        
-    //     const user = User.findOne({ email: new RegExp(`^${email}`, 'i')});
+    async login(req, res) {
+        const { email, password } = req.body;
 
-    //     if (!user) {
-    //         throw new ApiError('INCORRECT_CREDENTIALS');
-    //     }
+        const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
-    //     const match = bcrypt.compare(password, user.hashedPassword);
+        if (!user.email) {
+            throw new ApiError('INCORRECT_CREDENTIALS');
+        }
 
-    //     if (!match) {
-    //         throw new ApiError('INCORRECT_CREDENTIALS');
-    //     }
+        const match = await bcrypt.compare(password, user.hashedPassword);
 
-    //     return res.json();
-    // }
+        if (!match) {
+            throw new ApiError('INCORRECT_CREDENTIALS');
+        }
+
+        return res.json(formatJSON(user, '_id username email'));
+    }
 };

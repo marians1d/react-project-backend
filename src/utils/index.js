@@ -2,6 +2,7 @@ const jwt = require('./jwt');
 const auth = require('./auth');
 const requestHandler = require('./requests');
 const ApiError = require('./error');
+const validator = require('validator');
 
 const formatJSON = (obj, keys) => {
     const keysArr = keys.split(' ');
@@ -19,5 +20,6 @@ module.exports = {
     auth,
     requestHandler,
     ApiError,
-    formatJSON
+    formatJSON,
+    validator
 };

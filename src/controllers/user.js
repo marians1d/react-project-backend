@@ -1,12 +1,26 @@
 const bcrypt = require('bcrypt');
 
 const { jwt, ApiError, formatJSON } = require('../utils');
+const validator = require('validator');
 
 const User = require('../models/user');
+
+const blacklist = new Set();
 
 module.exports = {
     async register(req, res) {
         const { username, email, password } = req.body;
+
+        const validEmail = validator.isEmail(email.trim().toLowerCase());
+        const validPassword = validator.default.isLength(password.trim(), { min: 5, max: 1000 });
+
+        if (!validEmail) {
+            throw new ApiError('INVALID_EMAIL', 401);
+        }
+
+        if (!validPassword) {
+            throw new ApiError('INVALID_PASSWORD', 401);
+        }
 
         const existing = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
@@ -18,7 +32,7 @@ module.exports = {
 
         const user = new User({
             username,
-            email,
+            email: email.trim().toLowerCase(),
             hashedPassword,
         });
 
@@ -54,6 +68,23 @@ module.exports = {
             throw new ApiError('INCORRECT_CREDENTIALS');
         }
 
-        return res.json(formatJSON(user, '_id username email'));
+        const accessToken = jwt.createToken({
+            _id: user._id,
+            username: user.username,
+            email: user.email
+        }); 
+
+        const formattedUser = formatJSON(user, '_id username email');
+
+        formattedUser.accessToken = accessToken;
+
+        return res.json(formattedUser);
+    },
+
+    validateToken(token) {
+        if (blacklist.has(token)) {
+            throw new Error('Token is blacklisted');
+        }
+        return jwt.verify(token);
     }
 };

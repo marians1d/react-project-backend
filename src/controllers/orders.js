@@ -1,4 +1,4 @@
-const Order = require('../models/order');
+const Order = require('../models/Order');
 const { ApiError } = require('../utils');
 
 async function getAll(req, res) {

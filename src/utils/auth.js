@@ -4,6 +4,5 @@ const removePassword = (data) => {
 };
 
 module.exports = {
-    removePassword,
-    
+    removePassword
 };

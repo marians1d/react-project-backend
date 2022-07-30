@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { jwt, ApiError, formatJSON } = require('../utils');
 const validator = require('validator');
 
-const User = require('../models/user');
+const User = require('../models/User');
 const { logout } = require('../services/user');
 
 
@@ -82,8 +82,6 @@ module.exports = {
     },
 
     logout(req, res) {
-        const token = req.user.token;
-
         logout(req.user.token);
 
         res.status(204).end();

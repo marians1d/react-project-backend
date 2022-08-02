@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { jwt, ApiError, formatJSON } = require('../utils');
 const validator = require('validator');
 
-const User = require('../models/User');
+const { User } = require('../models');
 const { logout } = require('../services/user');
 
 

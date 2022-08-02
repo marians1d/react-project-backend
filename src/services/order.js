@@ -1,4 +1,4 @@
-const Order = require('../models/Order');
+const { Order } = require('../models');
 
 async function getById(id) {
     return Order.findById(id);

@@ -58,7 +58,7 @@ module.exports = {
 
         const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
-        if (!user.email) {
+        if (!user || !user.email) {
             throw new ApiError('INCORRECT_CREDENTIALS');
         }
 

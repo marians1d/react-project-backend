@@ -5,7 +5,10 @@ const RESPONSE_MESSAGES = {
     'INVALID_EMAIL': 'Email is invalid',
     'INVALID_PASSWORD': 'Password is invalid',
     'INVALID_TOKEN': 'Token is blacklisted',
-    'ORDER_NOT_FOUND': 'Order not found'
+    'ORDER_NOT_FOUND': 'Order not found',
+    'INVALID_TITLE': 'Title is invalid',
+    'INVALID_DESCRIPTION': 'Description is invalid',
+    'INVALID_ADDRESS': 'Address is invalid',
 };
 
 class ApiError extends Error {

@@ -12,7 +12,6 @@ const orderSchema = new Schema({
             'private',
             'public'
         ],
-        required: true
     },
     appointedEmployes: [{
         type: ObjectId,
@@ -20,12 +19,13 @@ const orderSchema = new Schema({
     }],
     price: { type: Number },
     imageUrl: { type: String },
-    type: { type: String },
     status: { type: String },
     measurementDate: {
         type: Date
     },
-    ownerId: { type: ObjectId, ref: 'User' }
+    ownerId: { type: ObjectId, ref: 'User' },
+    updated: { type: Date },
+    created: { type: Date }
 });
 
 const Order = model('Order', orderSchema);

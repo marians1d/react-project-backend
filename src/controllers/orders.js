@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const { Order } = require('../models');
 const { ApiError } = require('../utils');
 
@@ -16,26 +18,72 @@ async function getById(req, res) {
 }
 
 async function add(req, res) {
-    const { title, description, price, image, type, status } = req.body;
+    const { title, description, address, imageUrl, visibility } = req.body;
+
+    const validTitle = validator.default.isLength(title, {
+        min: 3
+    });
+
+    if (!validTitle) {
+        throw new ApiError('INVALID_TITLE', 401);
+    }
+
+    const validDescription = validator.default.isLength(description, {
+        min: 10
+    });
+
+    if (!validDescription) {
+        throw new ApiError('INVALID_DESCRIPTION', 401);
+    }
+
+    const validAddress = validator.default.isLength(address, {
+        min: 5
+    });
+
+    if (!validAddress) {
+        throw new ApiError('INVALID_ADDRESS', 401);
+    }
 
     const result = new Order({
         title,
         description,
-        price,
-        image,
-        type,
-        status
+        address,
+        imageUrl,
+        visibility,
+        created: new Date()
     });
 
     await result.save();
 
-    res.json(result);
+    res.json({
+
+    });
 }
 
 async function updateById(req, res) {
     const id = req.params.id;
 
-    const { title, description, price, image, type, status } = req.body;
+    const { title, description, address, imageUrl, visibility } = req.body;
+
+    const validTitle = validator.default.isLength(title, {
+        min: 3
+    });
+
+    if (!validTitle) {
+        throw new ApiError('INVALID_TITLE', 401);
+    }
+
+    const validDescription = validator.default.isLength(description, {
+        min: 10
+    });
+
+    if (!validDescription) {
+        throw new ApiError('INVALID_DESCRIPTION', 401);
+    }
+
+    const validAddress = validator.default.isLength(address, {
+        min: 5
+    });
 
     const existing = await Order.findById(id);
 
@@ -45,10 +93,9 @@ async function updateById(req, res) {
 
     existing.title = title;
     existing.description = description;
-    existing.price = price;
-    existing.image = image;
-    existing.type = type;
-    existing.status = status;
+    existing.address = address;
+    existing.imageUrl = imageUrl;
+    existing.visibility = visibility;
 
     await existing.save();
 

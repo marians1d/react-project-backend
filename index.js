@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 
 const auth = require('./src/middlewares/auth');
 
 const routes = require('./src/routes');
 const config = require('./src/config/config');
 
-require('dotenv').config();
 
 // Connect database
 require('./src/config/database');

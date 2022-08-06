@@ -9,7 +9,9 @@ const formatJSON = (obj, keys) => {
 
     const result = {};
     keysArr.forEach((key) => {
-        result[key] = obj[key];
+        if (obj[key]) {
+            result[key] = obj[key];
+        }
     });
 
     return result;

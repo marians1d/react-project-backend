@@ -9,6 +9,7 @@ const RESPONSE_MESSAGES = {
     'INVALID_TITLE': 'Title is invalid',
     'INVALID_DESCRIPTION': 'Description is invalid',
     'INVALID_ADDRESS': 'Address is invalid',
+    'INVALID_VISIBILITY': 'Visibility is invalid',
 };
 
 class ApiError extends Error {

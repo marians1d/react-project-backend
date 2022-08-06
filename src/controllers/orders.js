@@ -1,7 +1,7 @@
 const validator = require('validator');
 
 const { Order } = require('../models');
-const { ApiError } = require('../utils');
+const { ApiError, formatJSON } = require('../utils');
 
 async function getAll(req, res) {
     const orders = await Order.find({});
@@ -44,6 +44,10 @@ async function add(req, res) {
         throw new ApiError('INVALID_ADDRESS', 401);
     }
 
+    if (!['private', 'public'].includes(visibility)) {
+        throw new ApiError('INVALID_VISIBILITY', 401);
+    }
+
     const result = new Order({
         title,
         description,
@@ -55,9 +59,9 @@ async function add(req, res) {
 
     await result.save();
 
-    res.json({
+    const response = formatJSON(result, '_id title description address imageUrl visibility created')
 
-    });
+    res.json(response);
 }
 
 async function updateById(req, res) {
@@ -85,6 +89,10 @@ async function updateById(req, res) {
         min: 5
     });
 
+    if (!validAddress) {
+        throw new ApiError('INVALID_ADDRESS', 401);
+    }
+
     const existing = await Order.findById(id);
 
     if (!existing) {
@@ -96,6 +104,7 @@ async function updateById(req, res) {
     existing.address = address;
     existing.imageUrl = imageUrl;
     existing.visibility = visibility;
+    existing.updated = new Date();
 
     await existing.save();
 

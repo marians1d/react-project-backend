@@ -4,7 +4,7 @@ const { Order } = require('../models');
 const { ApiError, formatJSON } = require('../utils');
 
 async function getAll(req, res) {
-    const orders = await Order.find({});
+    const orders = await Order.find({ status: 'active' });
 
     res.json(orders);
 }
@@ -12,7 +12,11 @@ async function getAll(req, res) {
 async function getById(req, res) {
     const id = req.params.id;
 
-    const order = await Order.findById(id);
+    const order = await Order.findOne({ _id: id, status: 'active' });
+
+    if (!order._id) {
+        throw new ApiError('ORDER_NOT_FOUND', 404);
+    }
 
     return res.json(order);
 }

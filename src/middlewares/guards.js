@@ -4,13 +4,13 @@ module.exports = {
             next();
         } else {
             res.status(401).json({ message: 'Please log in' });
-        } 
+        }
     },
 
     isOwner: () => (req, res, next) => {
         if (!req.user) {
             res.status(401).json({ message: 'Please log in' });
-        } else if (req.user._id == res.locals.item._ownerId) {
+        } else if (req.user._id == res.locals.order.ownerId) {
             next();
         } else {
             res.status(403).json({ message: 'You cannot modify this record' });

@@ -12,6 +12,6 @@ router.get('/', requestHandler(orders.getAll));
 router.post('/', isAuth(), requestHandler(orders.add));
 router.get('/:id', requestHandler(orders.getById));
 router.put('/:id', preload(api), isOwner(), requestHandler(orders.updateById));
-router.delete('/:id', isAuth(), isOwner(), requestHandler(orders.del));
+router.delete('/:id', isAuth(), preload(api), isOwner(), requestHandler(orders.del));
 
 module.exports = router;

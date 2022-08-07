@@ -18,7 +18,8 @@ require('./src/config/express')(app);
 
 app.use(cors({
     origin: config.origin,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'PUT', 'POST', 'DELETE']
 }));
 // Connect routes
 

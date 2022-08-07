@@ -54,13 +54,14 @@ async function add(req, res) {
         address,
         imageUrl,
         visibility,
-        status: 1,
+        ownerId: req.user._id,
+        status: 'active',
         created: new Date()
     });
 
     await result.save();
 
-    const response = formatJSON(result, '_id title description address imageUrl visibility ownerId created')
+    const response = formatJSON(result, '_id title description address imageUrl visibility ownerId created');
 
     res.json(response);
 }
@@ -115,11 +116,9 @@ async function updateById(req, res) {
 async function del(req, res) {
     const id = req.params.id;
 
-    console.log('here');
-
     const existing = await Order.findById(id);
 
-    existing.status = 2;
+    existing.status = 'deleted';
 
     await existing.save();
 

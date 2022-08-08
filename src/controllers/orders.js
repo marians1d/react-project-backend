@@ -4,7 +4,7 @@ const { Order } = require('../models');
 const { ApiError, formatJSON } = require('../utils');
 
 async function getAll(req, res) {
-    const orders = await Order.find({ status: 'active' });
+    const orders = await Order.find({ status: 'active' }).populate('ownerId');
 
     res.json(orders);
 }
@@ -58,7 +58,7 @@ async function add(req, res) {
         address,
         imageUrl,
         visibility,
-        ownerId: req.user._id,
+        ownerId: req.user,
         status: 'active',
         created: new Date()
     });

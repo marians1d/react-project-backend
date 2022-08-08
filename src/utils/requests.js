@@ -4,6 +4,7 @@ function requestHandler(fn) {
             await fn(req, res);
         } catch (error) {
             res.status(error.status || 500).json({
+                status: 'error',
                 message: error.message
             });
         }

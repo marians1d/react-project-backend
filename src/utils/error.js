@@ -4,6 +4,7 @@ const RESPONSE_MESSAGES = {
     'EMAIL_TAKEN': 'Email is taken',
     'INVALID_EMAIL': 'Email is invalid',
     'INVALID_PASSWORD': 'Password is invalid',
+    'INVALID_USERNAME': 'Username is invalid',
     'INVALID_TOKEN': 'Token is blacklisted',
     'ORDER_NOT_FOUND': 'Order not found',
     'INVALID_TITLE': 'Title is invalid',

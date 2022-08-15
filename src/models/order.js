@@ -20,6 +20,7 @@ const orderSchema = new Schema({
     price: { type: Number },
     imageUrl: { type: String },
     status: { type: String },
+    isDeleted: { type: Boolean },
     measurementDate: {
         type: Date
     },

@@ -11,8 +11,13 @@ module.exports = {
     async register(req, res) {
         const { username, email, password } = req.body;
 
+        const validUsername = validator.default.isLength(username.trim(), { min: 3, max: 1000 });
         const validEmail = validator.isEmail(email.trim().toLowerCase());
         const validPassword = validator.default.isLength(password.trim(), { min: 5, max: 1000 });
+
+        if (!validUsername) {
+            throw new ApiError('INVALID_USERNAME', 401);
+        }
 
         if (!validEmail) {
             throw new ApiError('INVALID_EMAIL', 401);

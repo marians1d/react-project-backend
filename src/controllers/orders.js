@@ -4,7 +4,33 @@ const { Order } = require('../models');
 const { ApiError, formatJSON } = require('../utils');
 
 async function getAll(req, res) {
-    const orders = await Order.find({ status: 'active' }).populate('ownerId');
+    const page = parseInt(req?.query?.page) || 1;
+    const limit = parseInt(req?.query?.limit) || 5;
+    const sort = req?.query?.sort;
+    const order = req?.query?.order;
+    const search = req?.query?.search;
+    const criteria = (req?.query?.criteria || '').trim();
+    const skipIndex = (page - 1) * limit;
+
+    const query = { isDeleted: false };
+    const sortCriteria = {};
+
+    if (sort && sort !== 'null' && order && order !== 'null') {
+        sortCriteria[sort] = order;
+    }
+
+    if (search && search !== 'null' && criteria && criteria !== 'null') {
+        query[criteria] = criteria == '_id' ? search : new RegExp(search, 'i');
+    }
+
+    Order.countDocuments(query);
+    const orders = await Order
+        .find(query)
+        .populate('ownerId')
+        .limit(limit)
+        .skip(skipIndex)
+        .sort(sortCriteria)
+        .lean();
 
     res.json(orders);
 }
@@ -12,7 +38,7 @@ async function getAll(req, res) {
 async function getById(req, res) {
     const id = req.params.id;
 
-    const order = await Order.findOne({ _id: id, status: 'active' });
+    const order = await Order.findOne({ _id: id, isDeleted: false }).populate('ownerId').lean();;
 
     if (!order._id) {
         throw new ApiError('ORDER_NOT_FOUND', 404);
@@ -59,7 +85,8 @@ async function add(req, res) {
         imageUrl,
         visibility,
         ownerId: req.user,
-        status: 'active',
+        status: 'pending',
+        isDeleted: false,
         created: new Date()
     });
 
@@ -122,7 +149,7 @@ async function del(req, res) {
 
     const existing = await Order.findById(id);
 
-    existing.status = 'deleted';
+    existing.isDeleted = true;
 
     await existing.save();
 

@@ -64,13 +64,13 @@ module.exports = {
         const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
 
         if (!user || !user.email) {
-            throw new ApiError('INCORRECT_CREDENTIALS');
+            throw new ApiError('INCORRECT_CREDENTIALS', 404);
         }
 
         const match = await bcrypt.compare(password, user.hashedPassword);
 
         if (!match) {
-            throw new ApiError('INCORRECT_CREDENTIALS');
+            throw new ApiError('INCORRECT_CREDENTIALS', 404);
         }
 
         const accessToken = jwt.createToken({

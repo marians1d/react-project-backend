@@ -1,11 +1,2 @@
-**/node_modules
-/docs/code
-/course-uploads
-/.history
-/imports
-**/.env
-/error.log
-/openapi-spec.yaml
-/*.log
-/logs
-.cache
+/node_modules
+/.env

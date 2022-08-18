@@ -1,5 +1,13 @@
-const user = require('./users')
+const router = require('express').Router();
 
-module.exports = app => {
-    app.use('/users', user);
-}
+const user = require('./users');
+const gallery = require('./gallery');
+const orders = require('./orders');
+const comments = require('./comments');
+
+router.use('/users', user);
+router.use('/gallery', gallery);
+router.use('/orders', orders);
+router.use('/comments', comments);
+
+module.exports = router;

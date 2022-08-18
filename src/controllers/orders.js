@@ -23,7 +23,8 @@ async function getAll(req, res) {
         query[criteria] = criteria == '_id' ? search : new RegExp(search, 'i');
     }
 
-    Order.countDocuments(query);
+    const count = await Order.countDocuments(query);
+
     const orders = await Order
         .find(query)
         .populate('ownerId')
@@ -32,7 +33,7 @@ async function getAll(req, res) {
         .sort(sortCriteria)
         .lean();
 
-    res.json(orders);
+    res.json({ count, orders });
 }
 
 async function getById(req, res) {

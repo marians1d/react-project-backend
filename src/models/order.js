@@ -26,7 +26,11 @@ const orderSchema = new Schema({
     },
     ownerId: { type: ObjectId, ref: 'User' },
     updated: { type: Date },
-    created: { type: Date }
+    created: { type: Date },
+    comments: [{
+        type: ObjectId,
+        ref: 'Comment'
+    }],
 });
 
 const Order = model('Order', orderSchema);

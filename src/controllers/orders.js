@@ -1,6 +1,6 @@
 const validator = require('validator');
 
-const { Order } = require('../models');
+const { Order, User } = require('../models');
 const { ApiError, formatJSON } = require('../utils');
 
 async function getAll(req, res) {
@@ -12,7 +12,7 @@ async function getAll(req, res) {
     const criteria = (req?.query?.criteria || '').trim();
     const skipIndex = (page - 1) * limit;
 
-    const query = { isDeleted: false };
+    const query = { isDeleted: false, $or: [ { visibility: 'public' }, { ownerId: req.user?._id } ] };
     const sortCriteria = {};
 
     if (sort && sort !== 'null' && order && order !== 'null') {
@@ -27,10 +27,10 @@ async function getAll(req, res) {
 
     const orders = await Order
         .find(query)
-        .populate('ownerId')
         .limit(limit)
         .skip(skipIndex)
         .sort(sortCriteria)
+        .populate('ownerId')
         .lean();
 
     res.json({ count, orders });
@@ -39,7 +39,16 @@ async function getAll(req, res) {
 async function getById(req, res) {
     const id = req.params.id;
 
-    const order = await Order.findOne({ _id: id, isDeleted: false }).populate('ownerId').lean();;
+    const order = await Order.findOne({ _id: id, isDeleted: false })
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'userId',
+            select: '_id username'
+        }
+    })
+    .populate('ownerId', '_id username')
+    .lean();
 
     if (!order._id) {
         throw new ApiError('ORDER_NOT_FOUND', 404);
@@ -85,13 +94,15 @@ async function add(req, res) {
         address,
         imageUrl,
         visibility,
-        ownerId: req.user,
+        ownerId: req.user._id,
         status: 'pending',
         isDeleted: false,
         created: new Date()
     });
 
     await result.save();
+
+    await User.updateOne({ _id: req.user._id}, { $push: { orders: result._id}});
 
     const response = formatJSON(result, '_id title description address imageUrl visibility ownerId created');
 

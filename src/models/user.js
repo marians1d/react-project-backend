@@ -4,6 +4,10 @@ const userSchema = new Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
     hashedPassword: { type: String, required: true },
+    orders: [{
+        type: ObjectId,
+        ref: 'Order'
+    }],
     comments: [{
         type: ObjectId,
         ref: 'Comment'

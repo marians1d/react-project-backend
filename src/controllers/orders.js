@@ -77,10 +77,10 @@ async function getById(req, res) {
         path: 'comments',
         populate: {
             path: 'userId',
-            select: '_id username'
+            select: '_id username profileImageUrl'
         }
     })
-    .populate('ownerId', '_id username')
+    .populate('ownerId', '_id username profileImageUrl')
     .lean();
 
     if (!order._id) {

@@ -34,8 +34,6 @@ async function uploadFile(file) {
             fields: 'id',
         });
 
-        console.log(response);
-        
         console.log('File Id:', response.data.id);
         return response.data.id;
     } catch (err) {

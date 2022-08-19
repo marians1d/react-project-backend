@@ -9,6 +9,7 @@ const { requestHandler } = require('../utils');
 const orders = require('../controllers/orders');
 
 router.get('/', requestHandler(orders.getAll));
+router.get('/personal', isAuth(), requestHandler(orders.getPersonal));
 router.post('/', isAuth(), requestHandler(orders.add));
 router.get('/:id', requestHandler(orders.getById));
 router.put('/:id', preload(api), isOwner(), requestHandler(orders.updateById));

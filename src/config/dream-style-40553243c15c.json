@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dream-style",
+  "private_key_id": "40553243c15c75fb8187b233974bfa12e02b68cf",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMowhnMjpvuC4A\nKr97wUJXnUVKjjaNCbRQdurMSMBneEs6U1aj/mbXby1PGk/qDh26ceEJ0qbNACNZ\noR9Lt4NVoFPJ95ZlzUFoYLKLHA/2YcgsmqDJzswbhEjAFNcSceAuZ3SH+XNIBnG+\nf+gc9akBirkDpY7cCoIK7Y6eIQOT/kHDgSNGkHgIGoFb9yj5bx+LjGLxzY7QwsI6\n80ki3rtpvJ4b2qQOtlF9jWY6ic1Bs0T6tBGZ7d37cND8VMuDsUh2fa5HszEIxhp8\n1YBLM98RtTB2g6RlSfT6IvVZ+S0zfoUaieNaRAI9C2t/QM5esgpStvOKH2pGGtpe\nRsMOWHd1AgMBAAECggEAELn173lx87yT0slFULhBoMFNVWq9l4mgU3Nk5Cda+Roi\ncmhqP71SBD0lVvHi1lH3dbKy0jq42sjIGutjw3lpVfZk4uOtFDHsYFVT3EsCHJsH\n4Z11LXAM/uX98rVa+KCWOM5iZNR4hJdop+MmKQSenwgK8Pr3Ul6jHBsoYFFFszLp\nQqsDHHz8XxJr4beOnQ8XHxe7bc2KPHm+XoOT62Ldi+gbq2ZFzcNziDUwtQj0Hjwe\nbmjR3RlCJ1SB0RpSydhWk7BitRRz+7n31LpT7/jebEprB+/G6/N/Qo/aGr4QvcWY\n5w8cYBbs5MbYE2DPRcEVOSsSGQhYsQ8y+N5m7cLRgQKBgQDw7lZ7KIdCD6h6Mqxi\nyWXfYaxSx8cWxSEALzm9MUlA1bGlLoWvCrjyA+8TjkpNYhTTxd3x/0/pjr7Sx7Hi\nzcUUaDKy48H1tRB1D0VQS1WFC6+bT3ytzEQtdw6fTvZCCiA7SiVhh50y+I0092CB\nMK+kCEJa99Oi/lS+Sr8kUAR5NwKBgQDZb5Je9zAW9jWOnCECX42jgAcrHuRJsEwP\nL2qsQsUSMBBr6d/pDByCF1QIeSrgLg8n6PGjJPF9HQH+2uZRHRNVIAFsmeOlmk6O\nZfd1PfTonGKr03ikhvAjvk3++t6VuKn5YZik4aI2i7s6eiWajZJkHmX9AFz6D7s2\nTM/Ptej6swKBgH1S3LVPjZv1XSPDPBxeupkJy4N727mibNoVtqkM/Be3kKJlorA8\nmZt6JGA9wbSi8kZ+REbfEYhh8izeJ0/czUkiMk0PYBMZTig1+04bAa8lNwFIxYf6\nGvSzW23OuxX7Am0U0oD68/BRjdIhY5eP5a0jhrCe/P1p4lbhtq+C1/DdAoGAbrQe\nitlBk79BH12gdMvfmkn53Ft7EYWABA85OYE5QvxTsA3AIbA354gnEbVXPhJVRxWT\nyWNqzC9zr6UVtGCgUivcbcWgINWCf3+s0PV9dt0AY8lkWCgXpasjnNlvcD031S96\nfyAd7bWQ2sIL2TeRPAY6GOkRbYOK5qeO+or8ln8CgYEA7K9mAwVAHfj1eEWRbY2Z\nP3WZj2s36hcE7U61384B7xQzHDaKiaQjbKloEJup0bG58aZUi6qlTnrmUxxGa++i\nkDWFsxHtAGdNkWtkA7CbvG0kNnvmESHt4zwXoHRKd34d444zKaXQbOZ0btf/FZHL\nzDi2omo1oC1O8tS0O+1rcaU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "project@dream-style.iam.gserviceaccount.com",
+  "client_id": "116188771220194291560",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/project%40dream-style.iam.gserviceaccount.com"
+}

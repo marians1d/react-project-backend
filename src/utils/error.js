@@ -1,16 +1,16 @@
 const RESPONSE_MESSAGES = {
-    'INCORRECT_CREDENTIALS': 'Incorrect email or password',
-    'NOT_FOUND': 'Not Found',
-    'EMAIL_TAKEN': 'Email is taken',
-    'INVALID_EMAIL': 'Email is invalid',
-    'INVALID_PASSWORD': 'Password is invalid',
-    'INVALID_USERNAME': 'Username is invalid',
-    'INVALID_TOKEN': 'Token is blacklisted',
-    'ORDER_NOT_FOUND': 'Order not found',
-    'INVALID_TITLE': 'Title is invalid',
-    'INVALID_DESCRIPTION': 'Description is invalid',
-    'INVALID_ADDRESS': 'Address is invalid',
-    'INVALID_VISIBILITY': 'Visibility is invalid',
+    'INCORRECT_CREDENTIALS': 'Неправилни имейл или парола',
+    'NOT_FOUND': 'Не е намерено',
+    'EMAIL_TAKEN': 'Имейла е зает',
+    'INVALID_EMAIL': 'Имейла е невалиден',
+    'INVALID_PASSWORD': 'Паролата е невалидна',
+    'INVALID_USERNAME': 'Потребителското име е невалидно',
+    'INVALID_TOKEN': 'Токена е изтекъл',
+    'ORDER_NOT_FOUND': 'Поръчката не е намерена',
+    'INVALID_TITLE': 'Заглавието е невалидно',
+    'INVALID_DESCRIPTION': 'Описанието е невалидно',
+    'INVALID_ADDRESS': 'Адреса е невалиден',
+    'INVALID_VISIBILITY': 'Видимостта е невалидна',
 };
 
 class ApiError extends Error {

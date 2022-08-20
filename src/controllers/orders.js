@@ -6,7 +6,7 @@ const { uploadFile } = require('../utils/drive');
 
 async function getAll(req, res) {
     const page = parseInt(req?.query?.page) || 1;
-    const limit = parseInt(req?.query?.limit) || 5;
+    const limit = parseInt(req?.query?.limit) || 6;
     const sort = req?.query?.sort;
     const order = req?.query?.order;
     const search = req?.query?.search;
@@ -39,7 +39,7 @@ async function getAll(req, res) {
 
 async function getPersonal(req, res) {
     const page = parseInt(req?.query?.page) || 1;
-    const limit = parseInt(req?.query?.limit) || 5;
+    const limit = parseInt(req?.query?.limit) || 6;
     const sort = req?.query?.sort;
     const order = req?.query?.order;
     const search = req?.query?.search;

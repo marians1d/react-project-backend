@@ -18,7 +18,7 @@ const orderSchema = new Schema({
         ref: 'User'
     }],
     price: { type: Number },
-    imageUrl: { type: String },
+    imageUrls: [{ type: String }],
     status: { type: String },
     isDeleted: { type: Boolean },
     measurementDate: {

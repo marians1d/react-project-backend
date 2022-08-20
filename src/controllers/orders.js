@@ -2,6 +2,7 @@ const validator = require('validator');
 
 const { Order, User } = require('../models');
 const { ApiError, formatJSON } = require('../utils');
+const { uploadFile } = require('../utils/drive');
 
 async function getAll(req, res) {
     const page = parseInt(req?.query?.page) || 1;
@@ -91,7 +92,7 @@ async function getById(req, res) {
 }
 
 async function add(req, res) {
-    const { title, description, address, imageUrl, visibility } = req.body;
+    const { title, description, address, imageUrls, visibility } = req.body;
 
     const validTitle = validator.default.isLength(title, {
         min: 3
@@ -125,7 +126,7 @@ async function add(req, res) {
         title,
         description,
         address,
-        imageUrl,
+        imageUrls,
         visibility,
         ownerId: req.user._id,
         status: 'pending',
@@ -137,15 +138,25 @@ async function add(req, res) {
 
     await User.updateOne({ _id: req.user._id}, { $push: { orders: result._id}});
 
-    const response = formatJSON(result, '_id title description address imageUrl visibility ownerId created');
+    const response = formatJSON(result, '_id title description address imageUrls visibility ownerId created');
 
     res.json(response);
+}
+
+async function addImage(req, res) {
+    const newProfileImage = req.files.orderImage;
+
+    const imageId = await uploadFile(newProfileImage);
+
+    const imageUrl = `https://drive.google.com/uc?id=${imageId}`;
+
+    res.json({imageUrl});
 }
 
 async function updateById(req, res) {
     const id = req.params.id;
 
-    const { title, description, address, imageUrl, visibility } = req.body;
+    const { title, description, address, imageUrls, visibility } = req.body;
 
     const validTitle = validator.default.isLength(title, {
         min: 3
@@ -180,7 +191,7 @@ async function updateById(req, res) {
     existing.title = title;
     existing.description = description;
     existing.address = address;
-    existing.imageUrl = imageUrl;
+    existing.imageUrls = imageUrls;
     existing.visibility = visibility;
     existing.updated = new Date();
 
@@ -206,6 +217,7 @@ module.exports = {
     getPersonal,
     getById,
     add,
+    addImage,
     updateById,
     del
 };

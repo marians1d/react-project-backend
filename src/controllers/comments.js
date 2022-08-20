@@ -22,7 +22,7 @@ async function newComment(text, userId, orderId) {
         }, { new: true })
     ]);
 
-    return commentRes.populate('userId', '_id username');
+    return commentRes.populate('userId', '_id username profileImageUrl');
 }
 
 async function createComment(req, res) {

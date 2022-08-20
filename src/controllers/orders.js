@@ -36,6 +36,39 @@ async function getAll(req, res) {
     res.json({ count, orders });
 }
 
+async function getPersonal(req, res) {
+    const page = parseInt(req?.query?.page) || 1;
+    const limit = parseInt(req?.query?.limit) || 5;
+    const sort = req?.query?.sort;
+    const order = req?.query?.order;
+    const search = req?.query?.search;
+    const criteria = (req?.query?.criteria || '').trim();
+    const skipIndex = (page - 1) * limit;
+
+    const query = { isDeleted: false, ownerId: req.user?._id };
+    const sortCriteria = {};
+
+    if (sort && sort !== 'null' && order && order !== 'null') {
+        sortCriteria[sort] = order;
+    }
+
+    if (search && search !== 'null' && criteria && criteria !== 'null') {
+        query[criteria] = criteria == '_id' ? search : new RegExp(search, 'i');
+    }
+
+    const count = await Order.countDocuments(query);
+
+    const orders = await Order
+        .find(query)
+        .limit(limit)
+        .skip(skipIndex)
+        .sort(sortCriteria)
+        .populate('ownerId')
+        .lean();
+
+    res.json({ count, orders });
+}
+
 async function getById(req, res) {
     const id = req.params.id;
 
@@ -44,10 +77,10 @@ async function getById(req, res) {
         path: 'comments',
         populate: {
             path: 'userId',
-            select: '_id username'
+            select: '_id username profileImageUrl'
         }
     })
-    .populate('ownerId', '_id username')
+    .populate('ownerId', '_id username profileImageUrl')
     .lean();
 
     if (!order._id) {
@@ -170,6 +203,7 @@ async function del(req, res) {
 
 module.exports = {
     getAll,
+    getPersonal,
     getById,
     add,
     updateById,

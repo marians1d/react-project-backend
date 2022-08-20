@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 
 const { jwt, ApiError, formatJSON } = require('../utils');
 const validator = require('validator');
+const { uploadFile } = require('../utils/drive');
 
 const { User } = require('../models');
 const { logout } = require('../services/user');
@@ -39,6 +40,7 @@ module.exports = {
             username,
             email: email.trim().toLowerCase(),
             hashedPassword,
+            profileImageUrl: 'https://drive.google.com/uc?id=1YLeGcABg88YpREERPskYhKxqbu3IO5ij'
         });
 
         await user.save();
@@ -46,7 +48,8 @@ module.exports = {
         const accessToken = jwt.createToken({
             _id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            profileImageUrl: user.profileImageUrl
         });
 
         return res.status(200)
@@ -54,7 +57,8 @@ module.exports = {
                 accessToken,
                 _id: user._id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                profileImageUrl: user.profileImageUrl
             });
     },
 
@@ -76,10 +80,11 @@ module.exports = {
         const accessToken = jwt.createToken({
             _id: user._id,
             username: user.username,
-            email: user.email
-        }); 
+            email: user.email,
+            profileImageUrl: user.profileImageUrl
+        });
 
-        const formattedUser = formatJSON(user, '_id username email');
+        const formattedUser = formatJSON(user, '_id username email profileImageUrl');
 
         formattedUser.accessToken = accessToken;
 
@@ -91,4 +96,18 @@ module.exports = {
 
         res.status(204).end();
     },
+
+    async profileImage(req, res) {
+        const userId = req.user?._id;
+
+        const newProfileImage = req.files.profileImage;
+
+        const imageId = await uploadFile(newProfileImage);
+
+        const profileImageUrl = `https://drive.google.com/uc?id=${imageId}`;
+
+        const user = await User.findOneAndUpdate({ _id: userId }, { profileImageUrl }, { runValidators: true, new: true }).populate('orders');
+
+        return res.json(user);
+    }
 };
